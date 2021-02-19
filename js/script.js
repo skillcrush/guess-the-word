@@ -1,17 +1,16 @@
 const guessedLettersElement = document.querySelector(".guessed-letters");
 const guessLetterButton = document.querySelector(".guess");
 const letterInput = document.querySelector(".letter");
-const word = "cat"; // substitute for a 'getWord' function if we decide to use a large array
+const word = "magnolia"; // substitute for a 'getWord' function if we decide to use a large array
 const wordInProgress = document.querySelector(".word-in-progress");
 let remainingGuesses = 6; // Let's output this to screen
 const remainingGuessesElement = document.querySelector(".remaining span");
 const guessedLetters = []; 
-const guess = ""; 
 const message = document.querySelector(".message");
 
 // Display our wordplaceholder at first paint
 const placeholder = function(){
-  wordArray = word.toUpperCase().split("");
+  const wordArray = word.toUpperCase().split("");
   const placeholderLetters = [];
   for(let letter of wordArray){
     placeholderLetters.push("☀️")
@@ -79,6 +78,8 @@ function updateGuessesRemaining(guess){
     // womp womp - bad guess, lose a chance
     message.innerText = `Sorry, the word has no ${guess}.`
     remainingGuesses -= 1;
+  } else {
+    message.innerText = `Yep, we've got a ${guess} - good guess!`
   }
 
   if (remainingGuesses === 0){
@@ -90,7 +91,7 @@ function updateGuessesRemaining(guess){
 
 const updateWord = function(guessedLetters){
 
-  wordArray = word.toUpperCase().split("");
+  const wordArray = word.toUpperCase().split("");
   const revealWord = [];
   for(let letter of wordArray){
     if(guessedLetters.includes(letter)){
