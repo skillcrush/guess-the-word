@@ -72,7 +72,7 @@ const makeGuess = function (guess) {
   updateWord(guessedLetters);
 };
 
-function updateGuessesRemaining(guess){
+const updateGuessesRemaining = function(guess){
   const wordArray = word.toUpperCase().split("");
   if (!wordArray.includes(guess)){
     // womp womp - bad guess, lose a chance
