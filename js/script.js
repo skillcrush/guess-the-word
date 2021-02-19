@@ -12,7 +12,7 @@ const message = document.querySelector(".message");
 const placeholder = function(){
   const wordArray = word.toUpperCase().split("");
   const placeholderLetters = [];
-  for(let letter of wordArray){
+  for(let _letter of wordArray){
     placeholderLetters.push("☀️")
   }
   wordInProgress.innerText = placeholderLetters.join("");
