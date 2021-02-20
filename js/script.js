@@ -11,12 +11,11 @@ const playAgain = document.querySelector('.play-again');
 
 //  Choose word
 const getWord = async function () {
-  const response = await fetch('../wordfile.csv');
+  const response = await fetch('../words.txt');
   const words = await response.text();
-  const wordArray = words.split(',');
+  const wordArray = words.split(('\n'));
   const randomIndex = Math.floor(Math.random() * wordArray.length);
   word = wordArray[randomIndex].trim();
-  console.log(word);
   placeholder(word);
 };
 
