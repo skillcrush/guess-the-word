@@ -3,9 +3,10 @@ const guessLetterButton = document.querySelector('.guess');
 const letterInput = document.querySelector('.letter');
 let word = 'magnolia'; // Default word if
 const wordInProgress = document.querySelector('.word-in-progress');
+const remainingGuessesElement = document.querySelector('.remaining');
 let remainingGuesses = 6; // Let's output this to screen
-const remainingGuessesElement = document.querySelector('.remaining span');
-const guessedLetters = [];
+const remainingGuessesSpan = document.querySelector('.remaining span');
+let guessedLetters = [];
 const message = document.querySelector('.message');
 const playAgain = document.querySelector('.play-again');
 
@@ -16,7 +17,11 @@ const getWord = async function () {
   const wordArray = words.split(('\n'));
   const randomIndex = Math.floor(Math.random() * wordArray.length);
   word = wordArray[randomIndex].trim();
-  placeholder(word);
+  if (word.length > 10) {
+    getWord();
+  } else {
+    placeholder(word);
+  }
 };
 
 // Fire off the game
@@ -24,6 +29,7 @@ getWord();
 
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
+  console.log(word);
   const wordArray = word.toUpperCase().split('');
   const placeholderLetters = [];
   wordArray.forEach(function (letter) {
@@ -102,8 +108,11 @@ const updateGuessesRemaining = function (guess) {
   if (remainingGuesses === 0) {
     message.innerText = `GAME OVER. The word was ${word}`;
     startOver();
+  } else if (remainingGuesses === 1) {
+    remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
+  } else {
+    remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
   }
-  remainingGuessesElement.innerText = remainingGuesses;
 };
 
 const updateWord = function (guessedLetters) {
@@ -124,21 +133,29 @@ const updateWord = function (guessedLetters) {
 
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
-    message.innerText = 'You guessed the word!!!! WOOOO!!!';
+    const totalLettersGuessed = document.querySelectorAll('.guessed-letters li').length;
+    message.innerHTML = `<p>You guessed the word!!!! WOOOO!!!</p><p> It took you ${totalLettersGuessed} guesses.</p>`;
+
     startOver();
   }
 };
 
 const startOver = function () {
-  console.log('playAgain function fires now. Todo.');
   guessLetterButton.classList.add('hide');
   playAgain.classList.remove('hide');
+  remainingGuessesElement.classList.add('hide');
+  guessedLettersElement.classList.add('hide');
 };
 
 playAgain.addEventListener('click', function () {
+  guessedLetters = [];
   remainingGuesses = 6;
+  remainingGuessesSpan.innerText = '6 guesses';
   guessedLettersElement.innerHTML = '';
+  message.innerText = '';
   getWord();
   guessLetterButton.classList.remove('hide');
   playAgain.classList.add('hide');
+  remainingGuessesElement.classList.remove('hide');
+  guessedLettersElement.classList.remove('hide');
 });
