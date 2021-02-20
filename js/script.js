@@ -9,6 +9,7 @@ const guessedLetters = [];
 const message = document.querySelector('.message');
 const playAgain = document.querySelector('.play-again');
 
+//  Choose word
 const getWord = async function () {
   const response = await fetch('../wordfile.csv');
   const words = await response.text();
@@ -19,16 +20,16 @@ const getWord = async function () {
   placeholder(word);
 };
 
+// Fire off the game
 getWord();
 
-// Display our wordplaceholder at first paint
+// Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
   const wordArray = word.toUpperCase().split('');
   const placeholderLetters = [];
-  // eslint-disable-next-line no-unused-vars
-  for (const _letter of wordArray) {
+  wordArray.forEach(function (letter) {
     placeholderLetters.push('☀️');
-  }
+  });
   wordInProgress.innerText = placeholderLetters.join('');
 };
 
