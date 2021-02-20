@@ -1,15 +1,27 @@
 const guessedLettersElement = document.querySelector('.guessed-letters')
 const guessLetterButton = document.querySelector('.guess')
 const letterInput = document.querySelector('.letter')
-const word = 'magnolia' // substitute for a 'getWord' function if we decide to use a large array
+let word = 'magnolia' // substitute for a 'getWord' function if we decide to use a large array
 const wordInProgress = document.querySelector('.word-in-progress')
 let remainingGuesses = 6 // Let's output this to screen
 const remainingGuessesElement = document.querySelector('.remaining span')
 const guessedLetters = []
 const message = document.querySelector('.message')
 
+const getWord = async function () {
+  const response = await fetch('../wordfile.csv')
+  const words = await response.text()
+  const wordArray = words.split(',')
+  const randomIndex = Math.floor(Math.random() * wordArray.length)
+  word = wordArray[randomIndex].trim()
+  console.log(word)
+  placeholder(word)
+}
+
+getWord()
+
 // Display our wordplaceholder at first paint
-const placeholder = function () {
+const placeholder = function (word) {
   const wordArray = word.toUpperCase().split('')
   const placeholderLetters = []
   // eslint-disable-next-line no-unused-vars
@@ -18,7 +30,6 @@ const placeholder = function () {
   }
   wordInProgress.innerText = placeholderLetters.join('')
 }
-placeholder()
 
 guessLetterButton.addEventListener('click', () => {
   // Empty message paragraph
