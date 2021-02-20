@@ -33,14 +33,7 @@ guessLetterButton.addEventListener('click', () => {
     // We've got a letter, let's guess!
     makeGuess(guess)
   }
-
-  // Show user what they already guessed
-  showGuessedLetters()
 })
-
-const showGuessedLetters = function () {
-  guessedLettersElement.innerText = guessedLetters
-}
 
 const validateInput = function (input) {
   const acceptedLetter = /[A-Z]/
@@ -59,6 +52,17 @@ const validateInput = function (input) {
   }
 }
 
+const showGuessedLetters = function () {
+  // Clear the list first
+  guessedLettersElement.innerHTML = ''
+
+  for (const letter of guessedLetters) {
+    const li = document.createElement('li')
+    li.innerText = letter
+    guessedLettersElement.append(li)
+  }
+}
+
 const makeGuess = function (guess) {
   if (guessedLetters.includes(guess)) {
     message.innerText = 'You already guessed that letter, silly. Try again.'
@@ -66,6 +70,8 @@ const makeGuess = function (guess) {
     guessedLetters.push(guess)
     updateGuessesRemaining(guess) // we may or may not want this here
   }
+  // Show user what they already guessed
+  showGuessedLetters()
   // New letter guessed - let's see if we're right
   updateWord(guessedLetters)
 }
