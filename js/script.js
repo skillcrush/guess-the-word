@@ -44,6 +44,7 @@ guessLetterButton.addEventListener('click', () => {
     // We've got a letter, let's guess!
     makeGuess(guess)
   }
+  letterInput.value = ''
 })
 
 const validateInput = function (input) {
@@ -80,11 +81,11 @@ const makeGuess = function (guess) {
   } else {
     guessedLetters.push(guess)
     updateGuessesRemaining(guess) // we may or may not want this here
+    // Show user what they already guessed
+    showGuessedLetters()
+    // New letter guessed - let's see if we're right
+    updateWord(guessedLetters)
   }
-  // Show user what they already guessed
-  showGuessedLetters()
-  // New letter guessed - let's see if we're right
-  updateWord(guessedLetters)
 }
 
 const updateGuessesRemaining = function (guess) {
