@@ -14,7 +14,7 @@ const playAgainButton = document.querySelector('.play-again');
 const getWord = async function () {
   const response = await fetch('../words.txt');
   if (!response.ok) {
-    // make the promise be rejected if we didn't get a 2xx response
+    // If we can't fetch the file for some reason, use default word
     placeholder(word);
     console.log('Response failed - using default word');
   } else {
@@ -47,13 +47,12 @@ const placeholder = function (word) {
   wordInProgress.innerText = placeholderLetters.join('');
 };
 
-guessLetterButton.addEventListener('click', () => {
+guessLetterButton.addEventListener('click', (e) => {
+  e.preventDefault();
   // Focus on letter input
   letterInput.focus();
-
   // Empty message paragraph
   message.innerText = '';
-
   // Let's grab what was entered in the input
   const guess = letterInput.value.toUpperCase();
   // Let's make sure that it is a single letter
@@ -103,7 +102,7 @@ const makeGuess = function (guess) {
     // Show user what they already guessed
     showGuessedLetters();
     // New letter guessed - let's see if we're right
-    updateWord(guessedLetters);
+    updateWordInProgress(guessedLetters);
   }
 };
 
@@ -127,7 +126,7 @@ const updateGuessesRemaining = function (guess) {
   }
 };
 
-const updateWord = function (guessedLetters) {
+const updateWordInProgress = function (guessedLetters) {
   const wordArray = word.toUpperCase().split('');
   const revealWord = [];
   for (const letter of wordArray) {
