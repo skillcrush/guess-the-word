@@ -8,11 +8,11 @@ let remainingGuesses = 6; // Let's output this to screen
 const remainingGuessesSpan = document.querySelector('.remaining span');
 let guessedLetters = [];
 const message = document.querySelector('.message');
-const playAgain = document.querySelector('.play-again');
+const playAgainButton = document.querySelector('.play-again');
 
 //  Choose a random word
 const getWord = async function () {
-  const response = await fetch('../wors.txt');
+  const response = await fetch('../words.txt');
   if (!response.ok) {
     // make the promise be rejected if we didn't get a 2xx response
     placeholder(word);
@@ -38,8 +38,7 @@ getWord();
 const placeholder = function (word) {
   // Focus on letter input
   letterInput.focus();
-
-  console.log(word);
+  // console.log(word);
   const wordArray = word.toUpperCase().split('');
   const placeholderLetters = [];
   wordArray.forEach(function (letter) {
@@ -100,7 +99,7 @@ const makeGuess = function (guess) {
     message.innerText = 'You already guessed that letter, silly. Try again.';
   } else {
     guessedLetters.push(guess);
-    updateGuessesRemaining(guess); // we may or may not want this here
+    updateGuessesRemaining(guess);
     // Show user what they already guessed
     showGuessedLetters();
     // New letter guessed - let's see if we're right
@@ -119,7 +118,7 @@ const updateGuessesRemaining = function (guess) {
   }
 
   if (remainingGuesses === 0) {
-    message.innerText = `GAME OVER. The word was ${word}`;
+    message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>`;
     startOver();
   } else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
@@ -138,40 +137,43 @@ const updateWord = function (guessedLetters) {
       revealWord.push('☀️');
     }
   }
-  console.log(revealWord);
+  // console.log(revealWord);
   wordInProgress.innerText = revealWord.join('');
-
   checkIfWin();
 };
 
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
+    message.classList.add('win');
     const totalLettersGuessed = document.querySelectorAll('.guessed-letters li').length;
-    message.innerHTML = `<p>You guessed the word!!!! WOOOO!!!</p><p> It took you ${totalLettersGuessed} guesses.</p>`;
+    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p><p> It took you <span class="underline">${totalLettersGuessed} guesses</span>.</p>`;
 
     startOver();
   }
 };
 
 const startOver = function () {
+  // Show play again button and shift focus there - hide guess button and letters
+  letterInput.blur();
   guessLetterButton.classList.add('hide');
   remainingGuessesElement.classList.add('hide');
   guessedLettersElement.classList.add('hide');
-  // Show play again button so can launch click event
-  playAgain.classList.remove('hide');
+  playAgainButton.classList.remove('hide');
+  playAgainButton.focus();
 };
 
-playAgain.addEventListener('click', function () {
+playAgainButton.addEventListener('click', function () {
   // reset all original values - grab new word
+  message.classList.remove('win');
   guessedLetters = [];
   remainingGuesses = 6;
-  remainingGuessesSpan.innerText = '6 guesses';
+  remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
   guessedLettersElement.innerHTML = '';
   message.innerText = '';
   getWord();
   // show the right UI elements
   guessLetterButton.classList.remove('hide');
-  playAgain.classList.add('hide');
+  playAgainButton.classList.add('hide');
   remainingGuessesElement.classList.remove('hide');
   guessedLettersElement.classList.remove('hide');
 });
