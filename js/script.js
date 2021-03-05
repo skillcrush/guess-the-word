@@ -7,11 +7,28 @@ const remainingGuessesSpan = document.querySelector('.remaining span');
 const message = document.querySelector('.message');
 const playAgainButton = document.querySelector('.play-again');
 
-const word = 'magnolia';
+let word = 'magnolia';
 const guessedLetters = [];
+let remainingGuesses = 6;
 
+const getWord = async function () {
+  const response = await fetch('../words.txt');
+  const words = await response.text();
+  const wordArray = words.split(('\n'));
+  const randomIndex = Math.floor(Math.random() * wordArray.length);
+  word = wordArray[randomIndex].trim();
+  if (word.length > 10) {
+    getWord();
+  } else {
+    placeholder(word);
+  }
+};
+
+// Fire off the game
+getWord();
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
+  console.log(word);
   const wordArray = word.toUpperCase().split('');
   console.log(wordArray);
   const placeholderLetters = [];
@@ -20,8 +37,6 @@ const placeholder = function (word) {
   });
   wordInProgress.innerText = placeholderLetters.join('');
 };
-
-placeholder(word);
 
 guessLetterButton.addEventListener('click', (e) => {
   e.preventDefault();
@@ -62,8 +77,9 @@ const makeGuess = function (guess) {
   } else {
     guessedLetters.push(guess);
     console.log(guessedLetters);
-    showGuessedLetters();
+    updateGuessesRemaining(guess);
     updateWordInProgress(guessedLetters);
+    showGuessedLetters();
   }
 };
 
@@ -90,6 +106,26 @@ const updateWordInProgress = function (guessedLetters) {
   // console.log(revealWord);
   wordInProgress.innerText = revealWord.join('');
   checkIfWin();
+};
+
+const updateGuessesRemaining = function (guess) {
+  // Make an array with the letters of the word
+  const letterArray = word.toUpperCase().split('');
+  if (!letterArray.includes(guess)) {
+    // womp womp - bad guess, lose a chance
+    message.innerText = `Sorry, the word has no ${guess}.`;
+    remainingGuesses -= 1;
+  } else {
+    message.innerText = `Yep, we've got a ${guess} - good guess!`;
+  }
+
+  if (remainingGuesses === 0) {
+    message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>`;
+  } else if (remainingGuesses === 1) {
+    remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
+  } else {
+    remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
+  }
 };
 
 const checkIfWin = function () {
