@@ -53,7 +53,7 @@ guessLetterButton.addEventListener("click", function (e) {
   // Empty message paragraph
   message.innerText = "";
   // Let's grab what was entered in the input
-  const guess = letterInput.value.toUpperCase();
+  const guess = letterInput.value;
   // Let's make sure that it is a single letter
   const goodGuess = validateInput(guess);
 
@@ -65,7 +65,7 @@ guessLetterButton.addEventListener("click", function (e) {
 });
 
 const validateInput = function (input) {
-  const acceptedLetter = /[A-Z]/;
+  const acceptedLetter = /[a-zA-Z]/;
   if (input.length === 0) {
     // Is the input empty?
     message.innerText = "Please enter a letter";
@@ -93,6 +93,7 @@ const showGuessedLetters = function () {
 };
 
 const makeGuess = function (guess) {
+  guess = guess.toUpperCase();
   if (guessedLetters.includes(guess)) {
     message.innerText = "You already guessed that letter, silly. Try again.";
   } else {
