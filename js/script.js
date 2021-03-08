@@ -38,12 +38,11 @@ getWord();
 const placeholder = function (word) {
   // Focus on letter input
   letterInput.focus();
-  // console.log(word);
-  const wordArray = word.toUpperCase().split("");
   const placeholderLetters = [];
-  wordArray.forEach(function (letter) {
+  for (const letter of word) {
+    console.log(letter);
     placeholderLetters.push("☀️");
-  });
+  }
   wordInProgress.innerText = placeholderLetters.join("");
 };
 
