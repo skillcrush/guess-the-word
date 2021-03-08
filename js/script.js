@@ -28,13 +28,11 @@ const getWord = async function () {
 getWord();
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
-  console.log(word);
-  const wordArray = word.toUpperCase().split("");
-  console.log(wordArray);
   const placeholderLetters = [];
-  wordArray.forEach(function (letter) {
+  for (const letter of word) {
+    console.log(letter);
     placeholderLetters.push("☀️");
-  });
+  }
   wordInProgress.innerText = placeholderLetters.join("");
 };
 
@@ -71,16 +69,6 @@ const validateInput = function (input) {
   }
 };
 
-const showGuessedLetters = function () {
-  // Clear the list first
-  guessedLettersElement.innerHTML = "";
-  for (const letter of guessedLetters) {
-    const li = document.createElement("li");
-    li.innerText = letter;
-    guessedLettersElement.append(li);
-  }
-};
-
 const makeGuess = function (guess) {
   if (guessedLetters.includes(guess)) {
     message.innerText = "You already guessed that letter, silly. Try again.";
@@ -90,6 +78,16 @@ const makeGuess = function (guess) {
     updateGuessesRemaining(guess);
     showGuessesdLetters();
     updateWordInProgress(guessedLetters);
+  }
+};
+
+const showGuessesdLetters = function () {
+  // Clear the list first
+  guessedLettersElement.innerHTML = "";
+  for (const letter of guessedLetters) {
+    const li = document.createElement("li");
+    li.innerText = letter;
+    guessedLettersElement.append(li);
   }
 };
 
