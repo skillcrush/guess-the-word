@@ -12,12 +12,11 @@ const guessedLetters = [];
 
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
-  const wordArray = word.toUpperCase().split("");
-  console.log(wordArray);
   const placeholderLetters = [];
-  wordArray.forEach(function (letter) {
+  for (const letter of word) {
+    console.log(letter);
     placeholderLetters.push("☀️");
-  });
+  }
   wordInProgress.innerText = placeholderLetters.join("");
 };
 
