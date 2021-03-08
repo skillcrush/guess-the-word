@@ -28,13 +28,11 @@ const getWord = async function () {
 getWord();
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
-  console.log(word);
-  const wordArray = word.toUpperCase().split("");
-  console.log(wordArray);
   const placeholderLetters = [];
-  wordArray.forEach(function (letter) {
+  for (const letter of word) {
+    console.log(letter);
     placeholderLetters.push("☀️");
-  });
+  }
   wordInProgress.innerText = placeholderLetters.join("");
 };
 
@@ -121,6 +119,7 @@ const updateGuessesRemaining = function (guess) {
 
   if (remainingGuesses === 0) {
     message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>`;
+    startOver();
   } else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
   } else {
