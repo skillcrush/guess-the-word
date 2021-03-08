@@ -23,7 +23,7 @@ placeholder(word);
 
 guessLetterButton.addEventListener("click", function (e) {
   e.preventDefault();
-  const guess = letterInput.value.toUpperCase();
+  const guess = letterInput.value;
   console.log(guess);
   letterInput.value = "";
 });
