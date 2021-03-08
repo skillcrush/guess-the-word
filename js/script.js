@@ -28,13 +28,11 @@ const getWord = async function () {
 getWord();
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
-  console.log(word);
-  const wordArray = word.toUpperCase().split("");
-  console.log(wordArray);
   const placeholderLetters = [];
-  wordArray.forEach(function (letter) {
+  for (const letter of word) {
+    console.log(letter);
     placeholderLetters.push("☀️");
-  });
+  }
   wordInProgress.innerText = placeholderLetters.join("");
 };
 
@@ -43,7 +41,7 @@ guessLetterButton.addEventListener("click", function (e) {
   // Empty message paragraph
   message.innerText = "";
   // Let's grab what was entered in the input
-  const guess = letterInput.value.toUpperCase();
+  const guess = letterInput.value;
   // Let's make sure that it is a single letter
   const goodGuess = validateInput(guess);
 
@@ -55,7 +53,7 @@ guessLetterButton.addEventListener("click", function (e) {
 });
 
 const validateInput = function (input) {
-  const acceptedLetter = /[A-Z]/;
+  const acceptedLetter = /[a-zA-Z]/;
   if (input.length === 0) {
     // Is the input empty?
     message.innerText = "Please enter a letter";
@@ -72,6 +70,7 @@ const validateInput = function (input) {
 };
 
 const makeGuess = function (guess) {
+  guess = guess.toUpperCase();
   if (guessedLetters.includes(guess)) {
     message.innerText = "You already guessed that letter, silly. Try again.";
   } else {
@@ -121,6 +120,7 @@ const updateGuessesRemaining = function (guess) {
 
   if (remainingGuesses === 0) {
     message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>`;
+    startOver();
   } else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
   } else {
@@ -131,7 +131,7 @@ const updateGuessesRemaining = function (guess) {
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
-    message.innerHTML = "<p class=\"highlight\">You guessed the word!!!! WOOOO!!!</p>";
+    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p>`;
 
     startOver();
   }
