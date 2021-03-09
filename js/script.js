@@ -95,6 +95,6 @@ const updateWordInProgress = function (guessedLetters) {
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
-    message.innerHTML = "<p class=\"highlight\">You guessed the word!!!! WOOOO!!!</p>";
+    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p>`;
   }
 };
