@@ -77,12 +77,12 @@ const makeGuess = function (guess) {
     guessedLetters.push(guess);
     console.log(guessedLetters);
     updateGuessesRemaining(guess);
-    showGuessesdLetters();
+    showGuessedLetters();
     updateWordInProgress(guessedLetters);
   }
 };
 
-const showGuessesdLetters = function () {
+const showGuessedLetters = function () {
   // Clear the list first
   guessedLettersElement.innerHTML = "";
   for (const letter of guessedLetters) {
