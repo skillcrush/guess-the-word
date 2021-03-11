@@ -17,11 +17,7 @@ const getWord = async function () {
   const wordArray = words.split(("\n"));
   const randomIndex = Math.floor(Math.random() * wordArray.length);
   word = wordArray[randomIndex].trim();
-  if (word.length > 10) {
-    getWord();
-  } else {
-    placeholder(word);
-  }
+  placeholder(word);
 };
 
 // Fire off the game
