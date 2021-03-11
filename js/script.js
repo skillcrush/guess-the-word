@@ -108,9 +108,8 @@ const updateWordInProgress = function (guessedLetters) {
 };
 
 const updateGuessesRemaining = function (guess) {
-  // Make an array with the letters of the word
-  const letterArray = word.toUpperCase().split("");
-  if (!letterArray.includes(guess)) {
+  const upperWord = word.toUpperCase();
+  if (!upperWord.includes(guess)) {
     // womp womp - bad guess, lose a chance
     message.innerText = `Sorry, the word has no ${guess}.`;
     remainingGuesses -= 1;
