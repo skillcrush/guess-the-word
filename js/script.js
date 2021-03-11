@@ -107,8 +107,8 @@ const makeGuess = function (guess) {
 };
 
 const updateGuessesRemaining = function (guess) {
-  const wordArray = word.toUpperCase().split("");
-  if (!wordArray.includes(guess)) {
+  const upperWord = word.toUpperCase();
+  if (!upperWord.includes(guess)) {
     // womp womp - bad guess, lose a chance
     message.innerText = `Sorry, the word has no ${guess}.`;
     remainingGuesses -= 1;
@@ -144,9 +144,7 @@ const updateWordInProgress = function (guessedLetters) {
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
-    const totalLettersGuessed = document.querySelectorAll(".guessed-letters li").length;
-    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p><p> It took you <span class="underline">${totalLettersGuessed} guesses</span>.</p>`;
-
+    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p>`;
     startOver();
   }
 };
