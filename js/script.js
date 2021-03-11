@@ -26,11 +26,12 @@ const getWord = async function () {
 
 // Fire off the game
 getWord();
+
 // Display our symbols as placeholders for the chosen word's letters
 const placeholder = function (word) {
   const placeholderLetters = [];
   for (const letter of word) {
-    console.log(letter);
+    // console.log(letter);
     placeholderLetters.push("☀️");
   }
   wordInProgress.innerText = placeholderLetters.join("");
