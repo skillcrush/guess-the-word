@@ -14,14 +14,10 @@ let remainingGuesses = 6;
 const getWord = async function () {
   const response = await fetch("../words.txt");
   const words = await response.text();
-  const wordArray = words.split(("\n"));
+  const wordArray = words.split("\n");
   const randomIndex = Math.floor(Math.random() * wordArray.length);
   word = wordArray[randomIndex].trim();
-  if (word.length > 10) {
-    getWord();
-  } else {
-    placeholder(word);
-  }
+  placeholder(word);
 };
 
 // Fire off the game
