@@ -137,7 +137,6 @@ const startOver = function () {
   remainingGuessesElement.classList.add("hide");
   guessedLettersElement.classList.add("hide");
   playAgainButton.classList.remove("hide");
-  playAgainButton.focus();
 };
 
 playAgainButton.addEventListener("click", function () {
