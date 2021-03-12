@@ -12,7 +12,7 @@ const guessedLetters = [];
 let remainingGuesses = 6;
 
 const getWord = async function () {
-  const response = await fetch("../words.txt");
+  const response = await fetch("words.txt");
   const words = await response.text();
   const wordArray = words.split("\n");
   const randomIndex = Math.floor(Math.random() * wordArray.length);
