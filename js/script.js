@@ -13,7 +13,7 @@ let remainingGuesses = 6;
 
 //  Choose a random word
 const getWord = async function () {
-  const response = await fetch("../words.txt");
+  const response = await fetch("words.txt");
   if (!response.ok) {
     // If we can't fetch the file for some reason, use default word
     placeholder(word);
