@@ -9,7 +9,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 let word = "magnolia";
 let guessedLetters = [];
-let remainingGuesses = 6;
+let remainingGuesses = 8;
 
 const getWord = async function () {
   const response = await fetch("words.txt");
@@ -143,7 +143,7 @@ playAgainButton.addEventListener("click", function () {
   // reset all original values - grab new word
   message.classList.remove("win");
   guessedLetters = [];
-  remainingGuesses = 6;
+  remainingGuesses = 8;
   remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
   guessedLettersElement.innerHTML = "";
   message.innerText = "";
