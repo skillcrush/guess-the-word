@@ -78,7 +78,8 @@ const showGuessedLetters = function () {
 };
 
 const updateWordInProgress = function (guessedLetters) {
-  const wordArray = word.toUpperCase().split("");
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
   const revealWord = [];
   for (const letter of wordArray) {
     if (guessedLetters.includes(letter)) {
