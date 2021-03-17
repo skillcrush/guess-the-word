@@ -12,7 +12,7 @@ const guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function () {
-  const response = await fetch("words.txt");
+  const response = await fetch("https://gist.githubusercontent.com/redrambles/c72ae70504e304519b0e187b0f3dc1a4/raw/72db8cf89b7f5e6f804527c879e800bd6fb0d93c/words.txt");
   const words = await response.text();
   const wordArray = words.split("\n");
   const randomIndex = Math.floor(Math.random() * wordArray.length);
@@ -53,13 +53,13 @@ const validateInput = function (input) {
   const acceptedLetter = /[a-zA-Z]/;
   if (input.length === 0) {
     // Is the input empty?
-    message.innerText = "Please enter a letter";
+    message.innerText = "Please enter a letter.";
   } else if (input.length > 1) {
     // Did you type more than one letter?
-    message.innerText = "Please enter a single letter";
+    message.innerText = "Please enter a single letter.";
   } else if (!input.match(acceptedLetter)) {
     // Did you type a number, a special character or some other non letter thing?
-    message.innerText = "We need a letter from A to Z, please.";
+    message.innerText = "Please enter a letter from A to Z.";
   } else {
     // We finally got a single letter, omg yay
     return input;
@@ -112,11 +112,11 @@ const updateGuessesRemaining = function (guess) {
     message.innerText = `Sorry, the word has no ${guess}.`;
     remainingGuesses -= 1;
   } else {
-    message.innerText = `Yep, we've got a ${guess} - good guess!`;
+    message.innerText = `Good guess! The word has the letter ${guess}.`;
   }
 
   if (remainingGuesses === 0) {
-    message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>`;
+    message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>.`;
   } else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
   } else {
@@ -127,6 +127,6 @@ const updateGuessesRemaining = function (guess) {
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
-    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p>`;
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
   }
 };
