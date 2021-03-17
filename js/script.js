@@ -12,7 +12,7 @@ let guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function () {
-  const response = await fetch("words.txt");
+  const response = await fetch("https://gist.githubusercontent.com/redrambles/c72ae70504e304519b0e187b0f3dc1a4/raw/72db8cf89b7f5e6f804527c879e800bd6fb0d93c/words.txt");
   const words = await response.text();
   const wordArray = words.split("\n");
   const randomIndex = Math.floor(Math.random() * wordArray.length);
