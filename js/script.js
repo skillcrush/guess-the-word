@@ -9,7 +9,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 let word = "magnolia";
 const guessedLetters = [];
-let remainingGuesses = 6;
+let remainingGuesses = 8;
 
 const getWord = async function () {
   const response = await fetch("words.txt");
