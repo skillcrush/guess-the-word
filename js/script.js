@@ -42,13 +42,13 @@ const validateInput = function (input) {
   const acceptedLetter = /[a-zA-Z]/;
   if (input.length === 0) {
     // Is the input empty?
-    message.innerText = "Please enter a letter";
+    message.innerText = "Please enter a letter.";
   } else if (input.length > 1) {
     // Did you type more than one letter?
-    message.innerText = "Please enter a single letter";
+    message.innerText = "Please enter a single letter.";
   } else if (!input.match(acceptedLetter)) {
     // Did you type a number, a special character or some other non letter thing?
-    message.innerText = "We need a letter from A to Z, please.";
+    message.innerText = "Please enter a letter from A to Z.";
   } else {
     // We finally got a single letter, omg yay
     return input;
@@ -96,6 +96,6 @@ const updateWordInProgress = function (guessedLetters) {
 const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
-    message.innerHTML = `<p class="highlight">You guessed the word!!!! WOOOO!!!</p>`;
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
   }
 };
