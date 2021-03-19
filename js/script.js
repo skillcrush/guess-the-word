@@ -14,7 +14,7 @@ const placeholder = function (word) {
   const placeholderLetters = [];
   for (const letter of word) {
     console.log(letter);
-    placeholderLetters.push("☀️");
+    placeholderLetters.push("●");
   }
   wordInProgress.innerText = placeholderLetters.join("");
 };
