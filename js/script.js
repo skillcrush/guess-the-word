@@ -12,7 +12,7 @@ let guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function () {
-  const response = await fetch("https://gist.githubusercontent.com/redrambles/c72ae70504e304519b0e187b0f3dc1a4/raw/72db8cf89b7f5e6f804527c879e800bd6fb0d93c/words.txt");
+  const response = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
   const words = await response.text();
   const wordArray = words.split("\n");
   const randomIndex = Math.floor(Math.random() * wordArray.length);
@@ -115,7 +115,7 @@ const updateGuessesRemaining = function (guess) {
   }
 
   if (remainingGuesses === 0) {
-    message.innerHTML = `GAME OVER. The word was <span class="highlight">${word}</span>.`;
+    message.innerHTML = `Game over. The word was <span class="highlight">${word}</span>.`;
     startOver();
   } else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
