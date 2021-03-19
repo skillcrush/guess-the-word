@@ -28,7 +28,7 @@ const placeholder = function (word) {
   const placeholderLetters = [];
   for (const letter of word) {
     // console.log(letter);
-    placeholderLetters.push("☀️");
+    placeholderLetters.push("●");
   }
   wordInProgress.innerText = placeholderLetters.join("");
 };
@@ -97,7 +97,7 @@ const updateWordInProgress = function (guessedLetters) {
     if (guessedLetters.includes(letter)) {
       revealWord.push(letter.toUpperCase());
     } else {
-      revealWord.push("☀️");
+      revealWord.push("●");
     }
   }
   // console.log(revealWord);
