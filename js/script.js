@@ -7,8 +7,11 @@ const remainingGuesses = document.querySelector(".remaining"); //shows how many 
 const displayRemainingGuesses = document.querySelector(".remaining span");//span
 const guessMessage = document.querySelector(".message");//messages for every guess made
 const playAgainButton = document.querySelector(".play-again");//hidden play again button
-const word = "Edgar";
 
+//will be used with JSON later
+const word = "Edgar";
+//array for guessed letters
+const playerGuesses = [];
 
 //Function to add placeholder for each letter
 //NEEDS WORK
@@ -41,7 +44,10 @@ guessButton.addEventListener("click", function(e){
   console.log(captureInput);
   //erase input value for other inputs
   guessInput.value = "";
-  
+  guessMessage.innterText = "holiwood";
+
+  validateInput(captureInput);
+  makeGuess(captureInput);
 });
 
 const validateInput = function(input){
@@ -62,5 +68,15 @@ const validateInput = function(input){
   }
 
 };
+
+const makeGuess = function(letter){
+  letter.toUpperCase();//make all letter guessed UPPERCASE
+  //check playerGuesses array for letter guessed
+  if(playerGuesses.includes(letter)){
+    guessMessage.innerText = "Letter already guessed, TRY AGAIN!";
+  } else {
+    playerGuesses.push(letter);
+    console.log(playerGuesses);
+  };
+};
  
-validateInput(guessInput.value);
