@@ -7,9 +7,11 @@ const remainingGuesses = document.querySelector(".remaining"); //shows how many 
 const displayRemainingGuesses = document.querySelector(".remaining span");//span
 const guessMessage = document.querySelector(".message");//messages for every guess made
 const playAgainButton = document.querySelector(".play-again");//hidden play again button
+let remainingGuessesCount = 8; //maximum number of guesses player can make
+
 
 //will be used with JSON later
-const word = "Edgar";
+let word = "Edgar";
 //array for guessed letters
 const playerGuesses = [];
 
@@ -32,22 +34,29 @@ const placeholder = function(word){
 };
 
 //call function pass word to update
-placeholder(word);
+//placeholder(word);
 
 //event listener for guessButton click
 //function has e=event to store event listened to
 guessButton.addEventListener("click", function(e){
   //prevents reloading the page every click of button
   e.preventDefault();
+
+  guessMessage.innerText = "";
+  
   //assign input value to capture input
-  const captureInput = guessInput.value;
-  console.log(captureInput);
+  const captureInput = guessInput.value; //guess
+
+  const goodGuess = validateInput(captureInput);
+
+  if(goodGuess){
+    makeGuess(captureInput);
+  }
+
+  //console.log(captureInput);
   //erase input value for other inputs
   guessInput.value = "";
-  guessMessage.innterText = "holiwood";
-
-  validateInput(captureInput);
-  makeGuess(captureInput);
+  
 });
 
 const validateInput = function(input){
@@ -70,15 +79,20 @@ const validateInput = function(input){
 };
 
 const makeGuess = function(letter){
-  letter = letter.toUpperCase();//make all letter guessed UPPERCASE
+  //make all letter guessed UPPERCASE
+  //assign it to letter again or else it will
+  //only accept uppercase letters
+  letter = letter.toUpperCase();
+
   //check playerGuesses array for letter guessed
   if(playerGuesses.includes(letter)){
     guessMessage.innerText = "Letter already guessed, TRY AGAIN!";
   } else {
     playerGuesses.push(letter);
     console.log(playerGuesses);
-    showGuesses(letter);
-    updateWordInProgress(playerGuesses);
+    countGuesses(letter);//updateGuessesRemaing
+    showGuesses();//showGuessedLetters
+    updateWordInProgress(playerGuesses);//
   };
 };
 
@@ -90,7 +104,7 @@ const showGuesses = function(){
   //for each letter in playersGuessed 
   //use const li to create "li" element
   //assign letter to li content and append to playersGuessed display
-  for(const letter of playerGuesses){
+  for(const letter of playerGuesses){//guessedLetters
     const li = document.createElement("li");
     li.innerText = letter
     playersGuessed.append(li);
@@ -119,10 +133,30 @@ const updateWordInProgress = function(playerGuesses){
   checkWin();
 };
 
+//update remaining guesses count
+const countGuesses = function(guess){
+
+  const upperWord = word.toUpperCase();
+
+  if(!upperWord.includes(guess)){
+    guessMessage.innerText = `Sorry, the word has no ${guess}.`;
+    remainingGuessesCount -= 1;
+  } else{
+    guessMessage.innerText = `Got One! The word has the letter ${guess}.`;
+    }
+  
+  if(remainingGuessesCount === 0){
+    guessMessage.innerHTML = `Game Over! The word was <span class = "hightlight">${word}</span>.`
+  } else if(remainingGuessesCount === 1){
+    displayRemainingGuesses.innerText = `${remainingGuessesCount} guess`;
+  } else {
+    displayRemainingGuesses.innerText = `${remainingGuessesCount} guesses`;
+  }
+};
+
 const checkWin = function(){
   if(word.toUpperCase() === wordInProgress.innerText){
     guessMessage.classList.add("win");
     guessMessage.innerHTML = (`<p class="highlight">You Guessed Correctly! CONGRATS!!!</p>`);
   }
 };
- 
