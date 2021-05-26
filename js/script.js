@@ -13,7 +13,7 @@ let remainingGuessesCount = 8; //maximum number of guesses player can make
 //will be used with JSON later
 let word = "Edgar";
 //array for guessed letters
-const playerGuesses = [];
+let playerGuesses = [];
 
 const getWord = async function(){
   let response = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
@@ -166,6 +166,8 @@ const countGuesses = function(guess){
     }
   
   if(remainingGuessesCount === 0){
+    //call startOver function if var reaches 0 (lose)
+    startOver();
     guessMessage.innerHTML = `Game Over! The word was <span class = "hightlight">${word}</span>.`
   } else if(remainingGuessesCount === 1){
     displayRemainingGuesses.innerText = `${remainingGuessesCount} guess`;
@@ -177,6 +179,35 @@ const countGuesses = function(guess){
 const checkWin = function(){
   if(word.toUpperCase() === wordInProgress.innerText){
     guessMessage.classList.add("win");
-    guessMessage.innerHTML = (`<p class="highlight">You Guessed Correctly! CONGRATS!!!</p>`);
+    guessMessage.innerHTML = `<p class="highlight">You Guessed Correctly! CONGRATS!!!</p>`;
+    //call startOver if word is guessed correctly (win)
+    startOver();
   }
 };
+
+//startOver add and remove hide class
+//show try again button and hide other elements
+const startOver = function(){
+  guessButton.classList.add("hide");
+  remainingGuesses.classList.add("hide");
+  playersGuessed.classList.add("hide");
+  playAgainButton.classList.remove("hide");
+};
+
+playAgainButton.addEventListener("click", function(){
+  //reset all original values - grab NEW word
+  guessMessage.classList.remove("win");
+  guessMessage.innerHTML = "";
+  remainingGuessesCount = 8;
+  playerGuesses = [];
+  showGuesses();//used to update guessed letter list back to empty
+  remainingGuesses.innerHTML = `<p>You have <span>${remainingGuessesCount}</span> remaining guesses.</p>`
+  //grab new word
+  getWord();
+  
+  //show right UI elements
+  guessButton.classList.remove("hide");
+  remainingGuesses.classList.remove("hide");
+  playersGuessed.classList.remove("hide");
+  playAgainButton.classList.add("hide");
+});
