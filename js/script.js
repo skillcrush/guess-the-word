@@ -70,13 +70,59 @@ const validateInput = function(input){
 };
 
 const makeGuess = function(letter){
-  letter.toUpperCase();//make all letter guessed UPPERCASE
+  letter = letter.toUpperCase();//make all letter guessed UPPERCASE
   //check playerGuesses array for letter guessed
   if(playerGuesses.includes(letter)){
     guessMessage.innerText = "Letter already guessed, TRY AGAIN!";
   } else {
     playerGuesses.push(letter);
     console.log(playerGuesses);
+    showGuesses(letter);
+    updateWordInProgress(playerGuesses);
   };
+};
+
+const showGuesses = function(){
+  //empty unordered list for player's guesses display
+  playersGuessed.innerHTML = "";
+  //create new list item for each letter inside
+  //guessedLetters (global) and add it to unordered list
+  //for each letter in playersGuessed 
+  //use const li to create "li" element
+  //assign letter to li content and append to playersGuessed display
+  for(const letter of playerGuesses){
+    const li = document.createElement("li");
+    li.innerText = letter
+    playersGuessed.append(li);
+  }
+};
+
+const updateWordInProgress = function(playerGuesses){
+  const wordUpper = word.toUpperCase(); //word is globally declared
+  const wordArray = wordUpper.split(""); //word is now an array
+  //see what .split() does
+  console.log(wordArray);
+
+  const revealWord = [];
+  //check each letter to see if it is in the
+  //wordArray
+  for(const letter of wordArray){
+    if(playerGuesses.includes(letter)){
+      //update circle symbol with the correct letter
+      revealWord.push(letter.toUpperCase());
+    } else {
+      revealWord.push("●");
+    }
+  }
+  //update on display
+  wordInProgress.innerText = revealWord.join("");
+  checkWin();
+};
+
+const checkWin = function(){
+  if(word.toUpperCase() === wordInProgress.innerText){
+    guessMessage.classList.add("win");
+    guessMessage.innerHTML = (`<p class="highlight">You Guessed Correctly! CONGRATS!!!</p>`);
+  }
 };
  
