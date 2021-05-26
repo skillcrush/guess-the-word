@@ -15,6 +15,26 @@ let word = "Edgar";
 //array for guessed letters
 const playerGuesses = [];
 
+const getWord = async function(){
+  let response = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+  const words = await response.text(); //.text and not .json because response is from txt file
+  console.log(words);
+  //create array from string response using line break as delimiter
+  const wordArray = words.split("\n")
+  console.log(wordArray);
+  
+  const randomIndex = Math.floor(Math.random()*wordArray.length);
+  //console.log(randomIndex);
+
+  let randomWord = wordArray[randomIndex].trim();
+
+  word = randomWord;
+
+  placeholder(word);
+}
+
+getWord();
+
 //Function to add placeholder for each letter
 //NEEDS WORK
 // Create and name a function to update the paragraph's innerText for the "words-in-progress" element with circle symbols (●) to represent each letter in the word. The symbols will stay on the screen until the correct letter is guessed (in a future step).
