@@ -31,6 +31,7 @@ guessButton.addEventListener("click", function(e) {
   const goodGuess = checkPlayersInput(userGuess);
   if (goodGuess) {
     makeGuess(userGuess);
+
   }
   //console.log(goodGuess);
   letterInput.value = "";
@@ -63,8 +64,44 @@ const makeGuess = function(guess){
   }
   else {
     guessedLetters.push(guess);
-    console.log(guessedLetters);
-
+    //console.log(guessedLetters);
+    showGuessedLetters();
+    updateWordInProgress(guessedLetters);
   }
 
+};
+
+//Create a Function to Show the Guessed Letters
+const showGuessedLetters = function() {
+  guessedLettersElement.innerHTML = "";
+  for (const letter of guessedLetters) {
+    const liElement = document.createElement("li");
+    liElement.innerText = letter;
+    guessedLettersElement.append(liElement)
+  }
+};
+//Updates the word as guesses are added
+const updateWordInProgress = function(guessedLetters) {
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
+  const revealWord = [];
+  console.log(wordArray);
+
+  for (const letter of wordArray) {
+   if (guessedLetters.includes(letter)) {
+     revealWord.push(letter.toUpperCase());
+   } else {
+     revealWord.push("●");
+   }
+ }
+ wordInProgress.innerText = revealWord.join("");
+ checkIfWin();
+};
+
+//CHeck to see if player won the game
+const checkIfWin = function() {
+  if (word.toUpperCase() === wordInProgress.innerText) {
+    message.classList.add("win");
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+  }
 };
