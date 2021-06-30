@@ -80,6 +80,13 @@ h1 {
   text-align: center;
 }
 
+.lose {
+  padding: 0.25em;
+  background: #ffe2d6;
+  font-size: 1em;
+  border: 2px solid #ff8d5c;
+}
+
 .guess-form {
   display: flex;
   flex-direction: column;
