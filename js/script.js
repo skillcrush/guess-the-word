@@ -233,7 +233,3 @@ hintButton.addEventListener("click", function() {
   hintButton.classList.add("hide");
   hintAlready = true;
 });
-
-
-
-\
