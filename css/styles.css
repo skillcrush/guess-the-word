@@ -109,7 +109,8 @@ input:focus {
 }
 
 .guess,
-.play-again {
+.play-again,
+.get-hint {
   padding: 1em 3em;
   border-radius: 50px;
   margin-top: 1em;
