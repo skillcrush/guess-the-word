@@ -13,14 +13,16 @@ const remainingGuessesElement = document.querySelector(".remaining");
 const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
-
+const hintElement = document.querySelector(".hint");
+const hintButton = document.querySelector(".get-hint");
 
 let word = "magnolia";
 let guessedLetters = [];
 //Number of gueses
-let numOfGuesses = 8;
+let numOfGuesses = 2;
 //Added mod to reset number of guesses in one place
 let remainingGuesses = numOfGuesses;
+let hintAlready = false;
 
 //Sets the span in HTML to the number of guesses assigned
 remainingGuessesSpan.innerText = `${remainingGuesses} guesses`
@@ -34,8 +36,6 @@ const getWord = async function() {
   placeholder(word);
   console.log(word);
 };
-
-
 getWord();
 
 //Write a Function to Add Placeholders for Each Letter
@@ -48,8 +48,6 @@ const placeholder = function(word) {
   wordInProgress.innerText = placeholderArray.join("");
 };
 
-
-
 //Add an Event Listener for the Button
 guessButton.addEventListener("click", function(e) {
   e.preventDefault();
@@ -59,13 +57,9 @@ guessButton.addEventListener("click", function(e) {
   const goodGuess = checkPlayersInput(userGuess);
   if (goodGuess) {
     makeGuess(userGuess);
-
   }
   //console.log(goodGuess);
   letterInput.value = "";
-
-
-
 });
 
 //Create a Function to Check Player's Input
@@ -94,7 +88,6 @@ const makeGuess = function(guess){
   else {
     guessedLetters.push(guess);
     //console.log(guessedLetters);
-
     updateRemainingGuesses(guess);
     showGuessedLetters();
     updateWordInProgress(guessedLetters);
@@ -153,6 +146,7 @@ const updateWordInProgress = function(guessedLetters) {
  }
  wordInProgress.innerText = revealWord.join("");
  checkIfWin();
+ checkIfHint();
 };
 
 //Check to see if player won the game
@@ -187,3 +181,59 @@ playAgainButton.addEventListener("click", function() {
   guessedLettersElement.classList.remove("hide");
   playAgainButton.classList.add("hide");
 });
+
+
+//Create a funtion to get a hint
+
+//Check to see f yo have half of the number of gueses
+const checkIfHint = function() {
+  const halfGuesses = Math.floor(numOfGuesses/2);
+  //console.log(halfGuesses);
+  if (halfGuesses >= remainingGuesses) {
+    hintButton.classList.remove("hide");
+  }
+
+  if (hintAlready == true) {
+    hintButton.classList.add("hide");
+    hintElement.classList.add("hide");
+  }
+};
+
+//Get a letter fpr the hint
+const makeHint = function() {
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
+  const revealWordArray = wordInProgress.innerText.split("");
+  const hintPlace = revealWordArray.indexOf("●");
+  if (hintPlace >= 0) {
+    const hintLetter = wordArray[hintPlace];
+    return hintLetter;
+  }
+  else {
+    return false;
+  }
+};
+
+//Updates the document text with hint
+const updateHint = function(hint) {
+  if(hint == false) {
+    hintElement.innerText = "You guessed everything. Good Job on the win!";
+  }
+  else {
+    hintElement.innerText = `Did you try ${hint}?`
+  }
+};
+
+//Listens for the button
+hintButton.addEventListener("click", function() {
+  const hint = makeHint();
+  updateHint(hint);
+
+  hintElement.classList.remove("hide");
+  hintButton.classList.add("hide");
+  hintAlready = true;
+});
+
+
+
+\
