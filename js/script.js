@@ -1,34 +1,45 @@
-//Targeting the unordered list
-const guessedLetters = document.querySelector("ul");
-//Targeting the button
-const button = document.querySelector(".guess");
-//Targeting the text input
-const textInput = "";
-//Targeting empty paragraph
+const guessedLetters = document.querySelector(".guessed-letters");
+const guessButton = document.querySelector(".guess");
+const textInput = document.querySelector(".letter");
 const progress = document.querySelector(".word-in-progress");
-//Targeting remaining guesses
-const remaining = document.querySelector(".remaining");
-//Targeting span
-const span = document.querySelector("span");
-//Targeting empty paragraph for player guesses
-const message = document.querySelector(".guessed-letters");
-//Targeting hide button element
-const hide = document.querySelector(".hide");
-const word = ["m", "a", "g", "n", "o", "l", "i", "a"];
+const remainingGuess = document.querySelector(".remaining span");
+const message = document.querySelector(".message");
+const playAgainButton = document.querySelector(".play-again")
+const word = "magnolia";
 
 
 //Adding placeholders
-const placeholder = [];
-for(const letter of word) {
-    placeholder.push("●")
-};
+const placeholder = function (word) {
+    const placeholderLetters = [];
+    for (const letter of word) {
+        console.log(letter);
+            placeholderLetters.push("●");
+    }
 
-wordInProgress.innerText = placeholder.join("");
+progress.innerText = placeholderLetters.join("");
+};
 
 placeholder(word);
 
-button.addEventListener("click", function (e) {
-    e.preventDeafult();
+guessButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    const guess = textInput.value;
     console.log(guess);
     textInput.value = "";
 });
+
+//Accept & Validate Player Guesses
+let playerInput = function (input) {
+    const acceptedLetter = /[a-zA-Z]/;
+    const match = regex.exec(word);
+
+console.log(input);
+}
+
+
+    /*while (match) {
+        const guess = match[1];
+        console.log(guess);
+    }   match = regex.exec(word);
+    
+};*/ 
