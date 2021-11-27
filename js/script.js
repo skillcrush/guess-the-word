@@ -14,11 +14,11 @@ const numberGuesses = document.querySelector(".remaining span");
 const guessMessage = document.querySelector(".message");
 //the hidden button that will appear to prompt to player to play again
 const playAgainButton = document.querySelector(".play-again");
+
 //starting word
 const word = "magnolia";
 
-//function to add placeholders for each letter
-
+//function to add placeholder dots for each letter of the hidden word
 const addDots = function() {
     var dotArray = [];
     const splitWord = word.split("");
@@ -33,3 +33,14 @@ const addDots = function() {
 const dots = addDots();
 
 wordInProgress.innerText = dots;
+
+//event listener for Guess button
+//- prevents reloading 
+//- captures value of input
+guessButton.addEventListener("click", function (e) {
+    e.preventDefault(); //stop form reloading
+    const letterGuess = guessedLetter.value;
+    console.log(letterGuess);
+    guessedLetter.value = "";
+});
+
