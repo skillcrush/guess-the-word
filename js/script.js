@@ -17,7 +17,7 @@ const playAgainButton = document.querySelector(".play-again");
 // test word
 let word = "magnolia";
 // array for holding guessed guessed letters
-const guessedLetters = [];
+let guessedLetters = [];
 // starting value for remaining guesses
 let remainingGuesses = 8;
 
@@ -102,6 +102,8 @@ const updateGuessedLetters = function (guessedLetters) {
       revealWord.push("●");
     }
 }
+
+// console.log(revealWord);
 wordInProgress.innerText = revealWord.join("");
 checkIfWin();
 };
@@ -117,10 +119,11 @@ const updateGuessesRemaining = function (guess) {
 
   if (remainingGuesses === 0) {
     message.innerHTML = `Game over! The word was <span class="hightlight">${word}</span>.`;
+    startOver();
   } else if (remainingGuesses === 1) {
-    remainingGuesses.innerText = `${remainingGuesses} guess`;
+    remainingGuessesSpan.innerText = `${remainingGuesses} guess`;
   } else {
-    remainingGuesses.innerText = `${remainingGuesses} guesses`;
+    remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
   }
 };
 
@@ -128,5 +131,33 @@ const checkIfWin = function () {
   if (word.toUpperCase() === wordInProgress.innerText) {
     message.classList.add("win");
     message.innerHTML = `<p class="highlight">You guessed the correct word. Yay!</p>`;
+
+    startOver();
   }
 };
+
+const startOver = function () {
+    guessButton.classList.add("hide");
+    guessedLettersElement.classList.add("hide");
+    remainingGuessesP.classList.add("hide");
+    playAgainButton.classList.remove("hide");
+};
+
+playAgainButton.addEventListener("click", function () {
+  // reset all values to play again
+  message.classList.remove("win");
+  guessedLetters = [];
+  remainingGuesses = 8;
+  remainingGuessesSpan.innerText = `${remainingGuesses} guesses`;
+  guessedLettersElement.innerHTML = "";
+  message.innerText = "";
+
+  // generate new word to guess
+  getWord();
+
+  // reset UI elements
+  guessButton.classList.remove("hide");
+  guessedLettersElement.classList.remove("hide");
+  remainingGuessesP.classList.remove("hide");
+  playAgainButton.classList.add("hide");
+});
