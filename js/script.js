@@ -7,25 +7,20 @@ const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again hide");
 
-
+let word = "magnolia";
+const guessedLetters = [];
+let remainingGuesses  = 8;
 
     
 const getWord = async function () {
     const response = await fetch(`https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt`);
-    const words = await response.text ();
-    const wordArray = words.split("\n");
+    const word = await response.text ();
+    const wordArray = word.split("\n");
     const randomIndex = Math.floor(Math.random() * wordArray.length);
     word = wordArray[randomIndex].trim();
     placeholder(word);
 };
-    getWord();
-    
-    const wordArray = words.split("\n");
-    console.log(wordArray.split(/\s+/));
-
-let word = "magnolia";
-const guessedLetters = [];
-let remainingGuesses  = 8;
+getWord();
 
 const  placeholder = function (word) {
    const placeholderLetters = [];
@@ -33,11 +28,8 @@ const  placeholder = function (word) {
     console.log(letter);
     placeholderLetters.push("●");
    }
-wordInProgress.innerText = placeholderLetters.join("");
+   wordInProgress.innerText = placeholderLetters.join("");
 };
-
-placeholder(word);
-
 
 guessLetterButton.addEventListener("clicks", function(e) {
     e.preventDefault();
@@ -75,16 +67,16 @@ const makeGuess = function (guess) {
     } else {
         guessedLetters.push(guess);
         console.log(guessedLetters);
-    showGuessedLetter();
-    updateWordInProgress(guessedLetters);
+        updateGuessesRemaining(guess);
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
     }
-  const showGuessedLetters = function () {
-
-guessedLettersElement.innerHTML = "";
-for (const letter of guessedLetters) {
-    const li = document.createElement("li");
-    li.innerText = letter;
-    guessedLettersElement.append(li);
+const showGuessedLetters = function () {
+    guessedLettersElement.innerHTML = "";
+    for (const letter of guessedLetters) {
+        const li = document.createElement("li");
+        li.innerText = letter;
+        guessedLettersElement.append(li);
     }
 };
 
@@ -99,7 +91,6 @@ const updateWordInProgress = function (guessedLetters) {
         revealWord.push("●");
     }
 }
-console.log(revealWord);
 //console.log(revealWord);
 wordInProgress.innerText = revealWord.join("");
 checkIfWin();
@@ -146,10 +137,9 @@ playAgainButton.addEventListener("click", function () {
     guessedLettersElement.innerHTML = "";
     message.innerText = "";
     getWord();
-});
 
     guessLetterButton.classList.remove("hide");
     playAgainButton.classList.add("hide");
     remainingGuessesElement.classList.remove("hide");
     guessedLettersElement.classList.remove("hide");
-};
+});
