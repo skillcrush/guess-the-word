@@ -1,31 +1,30 @@
-const guessedLetterButton = document.querySelector(".guess");
 const guessedLetterElement = document.querySelector("guess-letter");
+const guessLetterButton = document.querySelector(".guess");
 const letterInput = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
 const remainingGuessesElement= document.querySelector(".remaining");
 const remainingGuessesSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
-const playAgainButton = document.querySelector(".play-again hide");
+const playAgainButton = document.querySelector(".play-again");
 
 let word = "magnolia";
-const guessedLetters = [];
+let guessedLetters = [];
 let remainingGuesses  = 8;
 
     
 const getWord = async function () {
     const response = await fetch(`https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt`);
-    const word = await response.text ();
+    const words = await response.text ();
     const wordArray = word.split("\n");
     const randomIndex = Math.floor(Math.random() * wordArray.length);
     word = wordArray[randomIndex].trim();
     placeholder(word);
 };
 getWord();
-
 const  placeholder = function (word) {
    const placeholderLetters = [];
    for (const letter of word) {
-    console.log(letter);
+    //console.log(letter);
     placeholderLetters.push("●");
    }
    wordInProgress.innerText = placeholderLetters.join("");
@@ -35,12 +34,10 @@ guessLetterButton.addEventListener("clicks", function(e) {
     e.preventDefault();
     message.innerText = "";
     const guess = letterInput.value;
-    console.log(guess);
     const goodGuess = validateInput(guess);
     if (goodGuess) {
         makeGuess(guess);
     }
-
     letterInput.value = "";
 });
   
@@ -71,6 +68,8 @@ const makeGuess = function (guess) {
         showGuessedLetters();
         updateWordInProgress(guessedLetters);
     }
+};
+
 const showGuessedLetters = function () {
     guessedLettersElement.innerHTML = "";
     for (const letter of guessedLetters) {
