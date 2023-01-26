@@ -13,7 +13,7 @@ const usedLetters = [];
 
 const lettersUnknown = function (word) {
     const lettersNotKnown = [];
-    for(let letter of word){
+    for(const letter of word){
         console.log(letter);
         lettersNotKnown.push("●");
     }
@@ -59,7 +59,7 @@ const makeGuess = function (letterGuessed) {
         message.innerText = "used that letter already";
     } else {
 
-            usedLetters.push(usedLetters);
+            usedLetters.push(letterGuessed);
             console.log(usedLetters);
             letterBeenGuessed();
             updateWordInProgress(usedLetters);
@@ -73,7 +73,7 @@ const letterBeenGuessed = function () {
     const li = document.createElement("li");
     li.innerText = letter;
     guessedLetters.append(li);
-}
+    }   
 };
 
 
@@ -82,14 +82,14 @@ const updateWordInProgress = function (usedLetters) {
     const wordArray = wordUpper.split("");
     const correctLetters = [];
 
-    for (const letters of wordArray) {
+    for (const letter of wordArray) {
         if (usedLetters.includes(letter)) {
             correctLetters.push(letter.toUpperCase());
         }else {
             correctLetters.push("●");
         }
     }
-    console.log(correctLetters);
+    //console.log(correctLetters);
     wordBeingGuessed.innerText = correctLetters.join("");
     didYouWin(); 
 };
