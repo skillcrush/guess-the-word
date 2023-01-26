@@ -2,13 +2,28 @@ const guessedLetters = document.querySelector(".guessed-letters");
 const button = document.querySelector(".guess"); 
 const inputLetterGuess = document.querySelector(".letter");
 const wordBeingGuessed = document.querySelector(".word-in-progress");
-const remainingGuesses = document.querySelector(".remaining");
+const remainingGuessesPart = document.querySelector(".remaining");
 const numGuessesLeftDisplay = document.querySelector(".remaining span");
 const message= document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
-const word = "magnolia";
+let word = "magnolia";
 const usedLetters = [];
+let remainingGuesses = 8; 
+
+
+const getWord = async function () {
+    const newWord = await fetch ("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt"
+    );
+    const data = await newWord.text();
+    const wordArray = data.split("\n");
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    word = wordArray[randomIndex].trim();
+    lettersUnknown(word);
+
+};
+getWord();
+
 
 
 const lettersUnknown = function (word) {
@@ -33,7 +48,6 @@ button.addEventListener("click", function (e) {
     if (correctGuess){
         makeGuess(letterGuessed);
     }
-
     inputLetterGuess.value = "";
 }); 
 
@@ -61,6 +75,7 @@ const makeGuess = function (letterGuessed) {
 
             usedLetters.push(letterGuessed);
             console.log(usedLetters);
+            countGuessesRemaining(letterGuessed)
             letterBeenGuessed();
             updateWordInProgress(usedLetters);
     }
@@ -92,6 +107,24 @@ const updateWordInProgress = function (usedLetters) {
     //console.log(correctLetters);
     wordBeingGuessed.innerText = correctLetters.join("");
     didYouWin(); 
+};
+
+const countGuessesRemaining = function(usedLetters) {
+    const upperWord = word.toUpperCase();
+    if (!upperWord.includes(usedLetters)) {
+        message.innerText = "incorrect guess one less try";
+        remainingGuesses -= 1; 
+    } else {
+        message.innerText = "that correct! ";
+    }
+
+    if (remainingGuesses === 0) {
+        message.innerHTML = `Game over, the word was ${word}`
+    } else if (remainingGuesses === 1){
+        numGuessesLeftDisplay.innerText = `${remainingGuesses} guess left`
+        } else {
+            numGuessesLeftDisplay.innerText = `${remainingGuesses} guesses left`
+     }
 };
 
 
