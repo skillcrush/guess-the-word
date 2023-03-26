@@ -115,7 +115,7 @@ const countGuessesRemaining = function(usedLetters) {
         message.innerText = `Incorrect guess, ${remainingGuesses} left.`;
         remainingGuesses -= 1; 
     } else {
-        message.innerText = "Thats correct!";
+        message.innerText = "That's correct!";
     }
 
     if (remainingGuesses === 0) {
