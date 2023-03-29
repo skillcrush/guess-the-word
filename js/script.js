@@ -149,7 +149,7 @@ playAgainButton.addEventListener("click", function() {
     message.classList.remove("win"); 
     usedLetters= [];
     remainingGuesses = 8;
-    remainingGuessesPart.innerText = `${remainingGuesses} Guessses total this time.`;
+    remainingGuessesPart.innerText = `${remainingGuesses} Guesses total this time.`;
     guessedLetters.innerHTML = "";
     message.innerText= "";
 
