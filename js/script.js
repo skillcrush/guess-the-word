@@ -109,10 +109,10 @@ const updateWordInProgress = function (usedLetters) {
     didYouWin(); 
 };
 
-const countGuessesRemaining = function(usedLetters) {
+const countGuessesRemaining = function(letterGuessed) {
     const upperWord = word.toUpperCase();
-    if (!upperWord.includes(usedLetters)) {
-        message.innerText = `sorry the word does not have ${usedLetters}`;
+    if (!upperWord.includes(letterGuessed)) {
+        message.innerText = `sorry the word does not have ${letterGuessed}`;
         remainingGuesses -= 1; 
     } else {
         message.innerText = "that correct! ";
