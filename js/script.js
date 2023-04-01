@@ -56,11 +56,11 @@ const validate = function (input) {
     const acceptedLetter = /[a-zA-Z]/;
     
     if (input.length === 0 ) {
-        message.innerText = "pick a letter please"; 
+        message.innerText = "Pick a letter please."; 
     } else if ( input.length > 1) {
-        message.innerText = "only one letter silly";
+        message.innerText = "Only one letter silly!";
     } else if (!input.match(acceptedLetter)) {
-        message.innerText = "has to be an actual letter";
+        message.innerText = "Has to be an actual letter.";
     } else {
         return input; 
     }
@@ -70,7 +70,7 @@ const validate = function (input) {
 const makeGuess = function (letterGuessed) {
   letterGuessed = letterGuessed.toUpperCase(); 
     if (usedLetters.includes(letterGuessed)) {
-        message.innerText = "used that letter already";
+        message.innerText = "You have used that letter already.";
     } else {
 
             usedLetters.push(letterGuessed);
@@ -115,7 +115,7 @@ const countGuessesRemaining = function(letterGuessed) {
         message.innerText = `sorry the word does not have ${letterGuessed}`;
         remainingGuesses -= 1; 
     } else {
-        message.innerText = "that correct! ";
+        message.innerText = "That's correct!";
     }
 
     if (remainingGuesses === 0) {
@@ -148,8 +148,8 @@ const startOver = function () {
 playAgainButton.addEventListener("click", function() {
     message.classList.remove("win"); 
     usedLetters= [];
-    remainingGuesses = 9;
-    remainingGuessesPart.innerText = `${remainingGuesses} guesses total this time.`;
+    remainingGuesses = 8;
+    remainingGuessesPart.innerText = `${remainingGuesses} Guesses total this time.`;
     guessedLetters.innerHTML = "";
     message.innerText= "";
 
