@@ -130,7 +130,7 @@ input:focus {
 .play-again:hover {
   outline: 0;
   transform: scale(0.98);
-  background: brightness(0.3);
+  filter: brightness(0.9);
   color: white;
 }
 
