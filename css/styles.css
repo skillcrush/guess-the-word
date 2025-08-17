@@ -36,8 +36,8 @@ h1 {
 
 .container {
   background: radial-gradient(50% 50% at 50% 50%,
-    rgba(167, 237, 237, 0.3) 0%,
-    rgba(156, 226, 226, 0) 100%);
+      rgba(167, 237, 237, 0.3) 0%,
+      rgba(156, 226, 226, 0) 100%);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -113,12 +113,12 @@ input:focus {
   padding: 1em 3em;
   border-radius: 50px;
   margin-top: 1em;
-  color: #fff;
-  background: #ff8d5c;
+  color: #D64000;
+  background: white;
+  border: 5px solid #f37945;
   font-size: 1em;
   align-self: center;
   outline: none;
-  border: 0;
   cursor: pointer;
 }
 
