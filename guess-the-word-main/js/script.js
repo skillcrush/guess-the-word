@@ -19,7 +19,7 @@ const hintButton = document.querySelector(".get-hint");
 let word = "magnolia";
 let guessedLetters = [];
 //Number of gueses
-let numOfGuesses = 7;
+let numOfGuesses = 2;
 //Added mod to reset number of guesses in one place
 let remainingGuesses = numOfGuesses;
 let hintAlready = false;
@@ -109,12 +109,9 @@ const updateRemainingGuesses = function (guess) {
   //Count the number of guesses
   if(remainingGuesses === 0) {
     remainingGuessesSpan.innerText = `no guesses`
-    //message.innerText = `Sorry! Game over. The mystery word is: ${wordUpper}`
-    message.innerHTML = "Sorry! Game over. The mystery word is <span class='lose'>" + wordUpper + "</span>";
+    message.innerText = `Sorry! Game over. The mystery word is: ${wordUpper}.`
     //Displays play again button if player LOSES
     startOver();
-
-
   }
   else if (remainingGuesses === 1) {
     remainingGuessesSpan.innerText = `${remainingGuesses} guess`
@@ -158,14 +155,12 @@ const checkIfWin = function() {
   if (wordUpper === wordInProgress.innerText) {
     message.classList.add("win");
     message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
-    hintButton.classList.add("hide");
-    hintElement.classList.add("hide");
     //Displays play again button if player WINS
     startOver();
   }
 };
 
-//Allows user toplay the game again
+//Allows user toplay the gam again
 const startOver = function() {
   guessButton.classList.add("hide");
   remainingGuessesElement.classList.add("hide");
@@ -194,16 +189,11 @@ playAgainButton.addEventListener("click", function() {
 const checkIfHint = function() {
   const halfGuesses = Math.floor(numOfGuesses/2);
   //console.log(halfGuesses);
-  if (remainingGuesses !== 0) {
-    if (halfGuesses >= remainingGuesses ) {
-      hintButton.classList.remove("hide");
-    }
-    if (hintAlready == true) {
-      hintButton.classList.add("hide");
-      hintElement.classList.add("hide");
-    }
+  if (halfGuesses >= remainingGuesses) {
+    hintButton.classList.remove("hide");
   }
-  else {
+
+  if (hintAlready == true) {
     hintButton.classList.add("hide");
     hintElement.classList.add("hide");
   }
@@ -226,7 +216,7 @@ const makeHint = function() {
 
 //Updates the document text with hint
 const updateHint = function(hint) {
-  if (hint == false) {
+  if(hint == false) {
     hintElement.innerText = "You guessed everything. Good Job on the win!";
   }
   else {
@@ -238,7 +228,12 @@ const updateHint = function(hint) {
 hintButton.addEventListener("click", function() {
   const hint = makeHint();
   updateHint(hint);
+
   hintElement.classList.remove("hide");
   hintButton.classList.add("hide");
   hintAlready = true;
 });
+
+
+
+\
